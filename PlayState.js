@@ -8,6 +8,10 @@ var PlayState = function() {
 	var mPathPoints;
 	var mHud;
 	var mSimulating;
+	var mExitDoor;
+	var mSurvivorsCount;
+	var mScoreRescued;
+	var mScoreDead;
 
 	this.create = function() {
 		var i;
@@ -18,10 +22,16 @@ var PlayState = function() {
 		mPathPoints = this.game.add.group();
 		mZombies = this.game.add.group();
 		mSurvivors = this.game.add.group();
+		mExitDoor = this.game.add.sprite(this.game.world.width - 80, 40, 'exit-door');
+
+		mExitDoor.anchor.setTo(0.5);
 
 		mSimulating = false;
+		mScoreRescued = 0;
+		mScoreDead = 0;
+		mSurvivorsCount = 2;
 
-		for(i = 0; i < 5; i++) {
+		for(i = 0; i < mSurvivorsCount; i++) {
 			mSurvivors.add(new Survivor(this, Math.random() * 100, Math.random() * 100));
 		}
 
@@ -34,12 +44,55 @@ var PlayState = function() {
 	};
 
 	this.update = function() {
+		var aShouldStopSimulation;
+
+		if(mSimulating) {
+			aShouldStopSimulation = this.updateSimulation();
+
+			if(aShouldStopSimulation) {
+				this.stopSimulation();
+				mHud.showSummary();
+			}
+		}
 	};
 
-	this.startSimulation = function() {
-		mSimulating = true;
+	this.updateSimulation = function() {
+		var i,
+			aLost = 0,
+			aSurvivor;
 
-	    for(var i = 0; i < mSurvivors.children.length; i++) {
+		for(i = 0; i < mSurvivors.children.length; i++) {
+			aSurvivor = mSurvivors.children[i];
+
+			if(!aSurvivor) {
+				continue;
+			}
+
+			if(aSurvivor.alive) {
+				if(aSurvivor.position.distance(mExitDoor.position) <= 50) {
+					aSurvivor.kill();
+					mScoreRescued++;
+					console.log('Rescured!', mScoreRescued);
+
+				} else if(aSurvivor.concludedPlaying()) {
+					aLost++;
+				}
+			}
+		}
+
+		// Return true if simulation should stop
+		console.log(mScoreRescued + mScoreDead + aLost, mSurvivorsCount);
+		return mScoreRescued + mScoreDead + aLost >= mSurvivorsCount;
+	}
+
+	this.startSimulation = function() {
+		var i;
+
+		mSimulating = true;
+		mScoreRescued = 0;
+		mScoreDead = 0;
+
+	    for(i = 0; i < mSurvivors.children.length; i++) {
 			if(mSurvivors.children[i]) {
 				mSurvivors.children[i].play();
 			}
@@ -48,8 +101,12 @@ var PlayState = function() {
 
 	this.stopSimulation = function() {
 		mSimulating = false;
+	};
 
-		for(var i = 0; i < mSurvivors.children.length; i++) {
+	this.finishSimulation = function() {
+		mSimulating = false;
+
+		for(i = 0; i < mSurvivors.children.length; i++) {
 			if(mSurvivors.children[i]) {
 				mSurvivors.children[i].rewind();
 			}

@@ -84,8 +84,8 @@ Survivor.prototype.play = function() {
 
 Survivor.prototype.rewind = function() {
 	this.mPlaying = false;
-	this.position.x = mSpawnPoint.x;
-	this.position.y = mSpawnPoint.y;
+	this.position.x = this.mSpawnPoint.x;
+	this.position.y = this.mSpawnPoint.y;
 };
 
 Survivor.prototype.updatePlaying = function() {
@@ -94,7 +94,7 @@ Survivor.prototype.updatePlaying = function() {
 
 	aCurrentPoint = this.mCurrentPoint < this.mPathPoints.length ? this.mPathPoints[this.mCurrentPoint] : null;
 
-	if(aCurrentPoint && this.position.distance(aCurrentPoint) <= 10) {
+	if(aCurrentPoint && this.position.distance(aCurrentPoint) <= 20) {
 		aNextPoint = (this.mCurrentPoint + 1) < this.mPathPoints.length ? this.mPathPoints[this.mCurrentPoint + 1] : null;
 
 		if(aNextPoint) {

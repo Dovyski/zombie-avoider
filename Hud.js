@@ -27,6 +27,11 @@ Hud.prototype.onClickPlay = function() {
     }
 };
 
+Hud.prototype.showSummary = function() {
+	// TODO: implement this!
+	console.log('Hud summary!');
+};
+
 Hud.prototype.getPlayState = function() {
 	return this.game.state.states[this.game.state.current];
 };
