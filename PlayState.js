@@ -7,6 +7,7 @@ var PlayState = function() {
 	var mSurvivors;
 	var mPathPoints;
 	var mHud;
+	var mSimulating;
 
 	this.create = function() {
 		var i;
@@ -17,6 +18,8 @@ var PlayState = function() {
 		mPathPoints = this.game.add.group();
 		mZombies = this.game.add.group();
 		mSurvivors = this.game.add.group();
+
+		mSimulating = false;
 
 		for(i = 0; i < 5; i++) {
 			mSurvivors.add(new Survivor(this, Math.random() * 100, Math.random() * 100));
@@ -33,7 +36,36 @@ var PlayState = function() {
 	this.update = function() {
 	};
 
+	this.startSimulation = function() {
+		mSimulating = true;
+
+	    for(var i = 0; i < mSurvivors.children.length; i++) {
+			if(mSurvivors.children[i]) {
+				mSurvivors.children[i].play();
+			}
+	    }
+	};
+
+	this.stopSimulation = function() {
+		mSimulating = false;
+
+		for(var i = 0; i < mSurvivors.children.length; i++) {
+			if(mSurvivors.children[i]) {
+				mSurvivors.children[i].rewind();
+			}
+	    }
+	};
+
+	this.isSimulating = function() {
+		return mSimulating;
+	};
+
+
 	this.getPathPoint = function() {
 		return mPathPoints.getFirstDead();
+	};
+
+	this.getSurvivors = function() {
+		return mSurvivors;
 	};
 };

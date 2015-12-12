@@ -15,5 +15,18 @@ Hud.prototype.constructor = Hud;
 // Public methods
 
 Hud.prototype.onClickPlay = function() {
-	console.log('sdsd');
+    var aState = this.getPlayState();
+
+    if(aState.isSimulating()) {
+        // TODO: change button to show the stop simulation meaning.
+        aState.stopSimulation();
+
+    } else {
+        // TODO: change button to start simulation
+        aState.startSimulation();
+    }
+};
+
+Hud.prototype.getPlayState = function() {
+	return this.game.state.states[this.game.state.current];
 };
