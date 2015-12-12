@@ -6,6 +6,7 @@ var PlayState = function() {
 	var mZombies;
 	var mSurvivors;
 	var mPathPoints;
+	var mHud;
 
 	this.create = function() {
 		var i;
@@ -25,10 +26,11 @@ var PlayState = function() {
 		for(i = 0; i < 200; i++) {
 			mPathPoints.add(new PathPoint(this));
 		}
+
+		mHud = new Hud(this.game);
 	};
 
 	this.update = function() {
-
 	};
 
 	this.getPathPoint = function() {
