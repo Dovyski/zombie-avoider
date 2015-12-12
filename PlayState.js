@@ -32,12 +32,12 @@ var PlayState = function() {
 		mSurvivorsCount = 2;
 
 		for(i = 0; i < mSurvivorsCount; i++) {
-			mSurvivors.add(new Survivor(this, Math.random() * 100, Math.random() * 100));
+			mSurvivors.add(new Survivor(this.game, Math.random() * 100, Math.random() * 100));
 		}
 
 		// Add a pool of poins
 		for(i = 0; i < 200; i++) {
-			mPathPoints.add(new PathPoint(this));
+			mPathPoints.add(new PathPoint(this.game));
 		}
 
 		mHud = new Hud(this.game);

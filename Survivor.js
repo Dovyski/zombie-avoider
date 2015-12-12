@@ -1,6 +1,6 @@
 Survivor = function (theGame, theX, theY) {
-    // Call parent's class (Phaser.Sprite) constructor
-    Phaser.Sprite.call(this, theGame, theX, theY, 'survivor');
+    // Call parent's class constructor
+    Entity.call(this, theGame, theX, theY, 'survivor');
 
     // Init everything
     this.mPathPoints = []; 									// points this survivor is following
@@ -8,15 +8,6 @@ Survivor = function (theGame, theX, theY) {
 	this.mCurrentPoint = 0;								// current point in the path.
 	this.mCounter = 0;
 	this.mDrawingPath = false;
-	this.mPlaying = false;
-	this.mConcludedPlaying = false;
-
-	// Misc
-	this.anchor.setTo(0.5);
-
-	// Physics stuff
-    this.game.physics.enable(this, Phaser.Physics.ARCADE);
-    this.body.collideWorldBounds = true;
 
 	// Mouse input
 	this.inputEnabled = true;
@@ -27,7 +18,7 @@ Survivor = function (theGame, theX, theY) {
 };
 
 // Lovely pants-in-the-head javascript boilerplate for OOP.
-Survivor.prototype = Object.create(Phaser.Sprite.prototype);
+Survivor.prototype = Object.create(Entity.prototype);
 Survivor.prototype.constructor = Survivor;
 
 // Public methods
@@ -37,7 +28,7 @@ Survivor.prototype.update = function(message) {
 
 	this.mCounter -= this.game.time.elapsedMS;
 
-	if(this.mPlaying) {
+	if(this.isPlaying()) {
 		this.updatePlaying();
 
 	} else if(this.mDrawingPath && this.mCounter <= 0) {
@@ -70,8 +61,9 @@ Survivor.prototype.erasePath = function() {
 Survivor.prototype.play = function() {
 	var aPoint;
 
-	this.mPlaying = true;
-	this.mConcludedPlaying = false;
+	// Call super class method.
+	Entity.prototype.play.call(this);
+
 	this.mCurrentPoint = 0;
 
 	aPoint = this.mCurrentPoint < this.mPathPoints.length ? this.mPathPoints[this.mCurrentPoint] : null;
@@ -102,7 +94,7 @@ Survivor.prototype.updatePlaying = function() {
 			this.body.velocity.y = aNextPoint.y - aCurrentPoint.y;
 
 		} else {
-			this.mConcludedPlaying = true;
+			this.markConcludedPlaying();
 			this.body.velocity.setTo(0, 0);
 		}
 
@@ -113,15 +105,13 @@ Survivor.prototype.updatePlaying = function() {
 };
 
 Survivor.prototype.onMouseOver = function() {
-
 };
 
 Survivor.prototype.onMouseOut = function() {
-
 };
 
 Survivor.prototype.onMouseDown = function() {
-	if(!this.mPlaying) {
+	if(!this.isPlaying()) {
 		this.mDrawingPath = true;
 		this.erasePath();
 	}
@@ -129,10 +119,6 @@ Survivor.prototype.onMouseDown = function() {
 
 Survivor.prototype.onMouseUp = function() {
 	this.mDrawingPath = false;
-};
-
-Survivor.prototype.concludedPlaying = function() {
-	return this.mConcludedPlaying;
 };
 
 Survivor.prototype.getPlayState = function() {
