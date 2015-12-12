@@ -35,6 +35,10 @@ var PlayState = function() {
 			mSurvivors.add(new Survivor(this.game, Math.random() * 100, Math.random() * 100));
 		}
 
+		for(i = 0; i < 5; i++) {
+			mZombies.add(new Zombie(this.game, this.game.rnd.integerInRange(50, 500), 40));
+		}
+
 		// Add a pool of poins
 		for(i = 0; i < 200; i++) {
 			mPathPoints.add(new PathPoint(this.game));

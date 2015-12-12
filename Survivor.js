@@ -24,7 +24,7 @@ Survivor.prototype.constructor = Survivor;
 // Public methods
 
 Survivor.prototype.update = function(message) {
-    Phaser.Sprite.prototype.update.call(this);
+    Entity.prototype.update.call(this);
 
 	this.mCounter -= this.game.time.elapsedMS;
 
