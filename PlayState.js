@@ -12,6 +12,8 @@ var PlayState = function() {
 	var mSurvivorsCount;
 	var mScoreRescued;
 	var mScoreDead;
+	var mBackground;
+	var mStartArea;
 
 	this.create = function() {
 		var i;
@@ -19,11 +21,14 @@ var PlayState = function() {
 		// Start Phaser's basics physics system.
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
+		mBackground = this.game.add.sprite(0, 0, 'background');
+		mStartArea = this.game.add.sprite(0, 0, 'start-area');
+
 		mPathPoints = this.game.add.group();
 		mZombies = this.game.add.group();
 		mSurvivors = this.game.add.group();
 
-		mExitDoor = this.game.add.sprite(this.game.world.width - 30, this.game.world.centerY - 40, 'exit-door');
+		mExitDoor = this.game.add.sprite(this.game.world.width - 60, this.game.world.height - 80, 'exit-door');
 		mExitDoor.anchor.setTo(0.5);
 
 		mSimulating = false;

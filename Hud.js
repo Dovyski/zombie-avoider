@@ -3,7 +3,7 @@ Hud = function (theGame) {
     Phaser.Group.call(this, theGame);
 
     // Init everything
-    this.mPlayButton = new Phaser.Button(this.game, this.game.world.width - 80, this.game.world.height - 80, 'button', this.onClickPlay, this, 2, 1, 0);
+    this.mPlayButton = new Phaser.Button(this.game, 30, this.game.world.height - 70, 'button', this.onClickPlay, this, 2, 1, 0);
 
     this.add(this.mPlayButton);
 };

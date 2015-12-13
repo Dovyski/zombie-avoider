@@ -18,7 +18,11 @@ var LoadState = function() {
 		//  Marc Russell, CC-BY 3.0, www.spicypixel.net, http://opengameart.org/content/alien-breed-esque-top-down-tilesheet
 		// Osmic, CC-BY 3.0, http://opengameart.org/content/zombie-ui-pack
 
-		this.load.image('background', 'assets/background.png';
-		this.load.spritesheet('survivor', 'assets/runner.png', 64, 56);
+		this.load.image('background', 'assets/background.png');
+		this.load.image('start-area', 'assets/start-area.png');
+		this.load.image('exit-door', 'assets/exit-door.png');
+		this.load.image('path-point', 'assets/path-point.png');
+		this.load.spritesheet('survivor', 'assets/survivor.png', 50, 49);
+		this.load.spritesheet('zombie', 'assets/zombie.png', 54, 50);
 	};
 };
