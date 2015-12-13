@@ -16,6 +16,7 @@ var PlayState = function() {
 	var mStartArea;
 	var mProps;
 	var mForeground;
+	var mLights;
 
 	this.create = function() {
 		var i;
@@ -27,7 +28,6 @@ var PlayState = function() {
 		mStartArea = this.game.add.sprite(0, 0, 'start-area');
 		mProps = this.game.add.group();
 
-		mPathPoints = this.game.add.group();
 		mZombies = this.game.add.group();
 		mSurvivors = this.game.add.group();
 
@@ -40,19 +40,22 @@ var PlayState = function() {
 		mSurvivorsCount = 2;
 
 		for(i = 0; i < mSurvivorsCount; i++) {
-			mSurvivors.add(new Survivor(this.game, Math.random() * 100, Math.random() * 100));
+			mSurvivors.add(new Survivor(this.game, 80 + 80 * i, 40));
 		}
 
 		for(i = 0; i < 5; i++) {
 			mZombies.add(new Zombie(this.game, this.game.rnd.integerInRange(0, this.game.world.width), this.game.rnd.integerInRange(100, this.game.world.height - 80)));
 		}
 
+		mForeground = this.game.add.group();
+		mLights = new Lights(this.game);
+
+		mPathPoints = this.game.add.group();
+
 		// Add a pool of poins
 		for(i = 0; i < 400; i++) {
 			mPathPoints.add(new PathPoint(this.game));
 		}
-
-		mForeground = this.game.add.group();
 
 		// Arrange all level stuff
 		this.initLevel();
@@ -217,6 +220,9 @@ var PlayState = function() {
 		return mSimulating;
 	};
 
+	this.getExitDoor = function() {
+		return mExitDoor;
+	};
 
 	this.getPathPoint = function() {
 		return mPathPoints.getFirstDead();
