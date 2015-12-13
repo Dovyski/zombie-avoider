@@ -17,6 +17,13 @@ PlayState = function() {
 	var mProps;
 	var mForeground;
 	var mLights;
+	var mZombieSfxCounter;
+
+	var mMusicTitle;
+	var mMusicPlanning;
+	var mSfxWalking;
+	var mSfxZombies;
+	var mSfxKilled;
 
 	this.create = function() {
 		var i;
@@ -41,6 +48,7 @@ PlayState = function() {
 		mScoreRescued = 0;
 		mScoreDead = 0;
 		mSurvivorsCount = 2;
+		mZombieSfxCounter = 0;
 
 		for(i = 0; i < mSurvivorsCount; i++) {
 			mSurvivors.add(new Survivor(this.game, 80 + 80 * i, 40));
@@ -67,6 +75,27 @@ PlayState = function() {
 		this.initEffects();
 
 		mHud = new Hud(this.game);
+
+		this.initSounds();
+	};
+
+	this.initSounds = function() {
+		mMusicTitle = new Phaser.Sound(this.game, 'title-music', 1, true);
+		mMusicPlanning = new Phaser.Sound(this.game, 'planning-music', 1, true);
+		mSfxWalking = new Phaser.Sound(this.game, 'walk', 0.2, true);
+		mSfxFinal = new Phaser.Sound(this.game, 'final', 0.5, false);
+		mSfxKilled = new Phaser.Sound(this.game, 'killed', 0.5, false);
+
+		mSfxZombies = [];
+
+		for(var i = 0; i < 7; i++) {
+			mSfxZombies.push(new Phaser.Sound(this.game, 'zombie' + i, 0.4, false));
+		}
+
+		// Start title music as soon as possible
+		this.game.sound.setDecodedCallback([mMusicPlanning], function() {
+			mMusicPlanning.play();
+		}, this);
 	};
 
 	// TODO: get all this inform from a file
@@ -159,7 +188,14 @@ PlayState = function() {
 				this.showLevelUpOrGameOver();
 			}
 
-		} else if(this.game.input.activePointer.isDown) {
+			mZombieSfxCounter -= this.game.time.elapsedMS;
+
+			if(mZombieSfxCounter <= 0) {
+				mSfxZombies[this.rnd.integerInRange(0, mSfxZombies.length - 1)].play();
+				mZombieSfxCounter = this.rnd.integerInRange(1000, 2500);
+			}
+
+		} else if(mHud.isSummaryActive() && this.game.input.activePointer.isDown) {
 			// Where should we go? Next level or just restart
 			// the current one?
 			if(this.shouldLevelUp()) {
@@ -174,6 +210,10 @@ PlayState = function() {
 	};
 
 	this.showLevelUpOrGameOver = function() {
+		mMusicTitle.stop();
+		mMusicPlanning.stop();
+		mSfxFinal.play();
+
 		if(this.shouldLevelUp()) {
 			mHud.showSummary('You did it!', 'Number of rescued survivors: ' + mScoreRescued);
 
@@ -187,6 +227,7 @@ PlayState = function() {
 	};
 
 	this.onAttackOverlap = function(theSurvivor, theZombie) {
+		mSfxKilled.play();
 		mScoreDead++;
 		theSurvivor.kill();	// TODO: add blood on the floor.
 	};
@@ -226,6 +267,10 @@ PlayState = function() {
 		mScoreRescued = 0;
 		mScoreDead = 0;
 
+		mSfxWalking.play();
+		mMusicTitle.play();
+		mMusicPlanning.stop();
+
 		mSurvivors.forEach(function(theElement, theIndex) {
 			theElement.play();
 		}, this);
@@ -237,10 +282,15 @@ PlayState = function() {
 
 	this.pauseSimulation = function() {
 		mSimulating = false;
+		mSfxWalking.pause();
 	};
 
 	this.stopSimulation = function() {
 		mSimulating = false;
+		mSfxWalking.stop();
+
+		mMusicTitle.stop();
+		mMusicPlanning.play();
 
 		mSurvivors.forEach(function(theElement, theIndex) {
 			theElement.rewind();

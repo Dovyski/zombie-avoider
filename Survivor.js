@@ -6,7 +6,7 @@ Survivor = function (theGame, theX, theY) {
     this.mPathPoints = []; 								// points this survivor is following
 	this.mCurrentPoint = 0;								// current point in the path.
 	this.mCounter = 0;
-	this.mDrawingPath = false;
+    this.mDrawingPath = false;
 
 	// Mouse input
 	this.inputEnabled = true;

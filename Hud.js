@@ -67,6 +67,10 @@ Hud.prototype.hideSummary = function() {
     this.mPlayButton.setFrames(1, 0, 2, 0);
 };
 
+Hud.prototype.isSummaryActive = function() {
+    return this.mTitle.visible;
+}
+
 Hud.prototype.getPlayState = function() {
 	return this.game.state.states[this.game.state.current];
 };
