@@ -30,8 +30,7 @@ Entity.prototype.rewind = function() {
     this.body.velocity.setTo(0);
 
 	this.mPlaying = false;
-	this.position.x = this.mSpawnPoint.x;
-	this.position.y = this.mSpawnPoint.y;
+	this.reset(this.mSpawnPoint.x, this.mSpawnPoint.y);
 };
 
 Entity.prototype.seek = function(theTarget, theVelocity) {
