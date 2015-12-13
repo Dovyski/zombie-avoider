@@ -2,7 +2,7 @@
  * Describes the play state.
  */
 
-var PlayState = function() {
+PlayState = function() {
 	var mZombies;
 	var mSurvivors;
 	var mPathPoints;
@@ -146,6 +146,9 @@ var PlayState = function() {
 	this.update = function() {
 		var aShouldStopSimulation;
 
+		this.game.physics.arcade.collide(mProps, mZombies);
+		this.game.physics.arcade.collide(mProps, mSurvivors);
+
 		if(mSimulating) {
 			this.game.physics.arcade.overlap(mSurvivors, mZombies, this.onAttackOverlap, null, this);
 
@@ -153,12 +156,34 @@ var PlayState = function() {
 
 			if(aShouldStopSimulation) {
 				this.pauseSimulation();
-				mHud.showSummary();
+				this.showLevelUpOrGameOver();
 			}
 
-			this.game.physics.arcade.collide(mProps, mZombies);
-			this.game.physics.arcade.collide(mProps, mSurvivors);
+		} else if(this.game.input.activePointer.isDown) {
+			// Where should we go? Next level or just restart
+			// the current one?
+			if(this.shouldLevelUp()) {
+				GameInfo.level++;
+				this.state.start('play');
+
+			} else {
+				this.stopSimulation();
+				mHud.hideSummary();
+			}
 		}
+	};
+
+	this.showLevelUpOrGameOver = function() {
+		if(this.shouldLevelUp()) {
+			mHud.showSummary('You did it!', 'Number of rescued survivors: ' + mScoreRescued);
+
+		} else {
+			mHud.showSummary('No one survived', 'Better luck next time');
+		}
+	};
+
+	this.shouldLevelUp = function() {
+		return mScoreRescued > 0; // TODO: check number of required survivors
 	};
 
 	this.onAttackOverlap = function(theSurvivor, theZombie) {
@@ -182,7 +207,6 @@ var PlayState = function() {
 				if(aSurvivor.position.distance(mExitDoor.position) <= 50) {
 					aSurvivor.kill();
 					mScoreRescued++;
-					console.log('Rescured!', mScoreRescued);
 
 				} else if(aSurvivor.concludedPlaying()) {
 					aLost++;
