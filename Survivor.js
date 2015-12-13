@@ -22,7 +22,7 @@ Survivor.prototype.constructor = Survivor;
 
 // Public methods
 
-Survivor.prototype.update = function(message) {
+Survivor.prototype.update = function() {
     Entity.prototype.update.call(this);
 
 	this.mCounter -= this.game.time.elapsedMS;
@@ -83,8 +83,7 @@ Survivor.prototype.updatePlaying = function() {
 		aNextPoint = (this.mCurrentPoint + 1) < this.mPathPoints.length ? this.mPathPoints[this.mCurrentPoint + 1] : null;
 
 		if(aNextPoint) {
-			this.body.velocity.x = aNextPoint.x - aCurrentPoint.x;
-			this.body.velocity.y = aNextPoint.y - aCurrentPoint.y;
+			this.seek(aNextPoint, 50);
 
 		} else {
 			this.markConcludedPlaying();
@@ -112,8 +111,4 @@ Survivor.prototype.onMouseDown = function() {
 
 Survivor.prototype.onMouseUp = function() {
 	this.mDrawingPath = false;
-};
-
-Survivor.prototype.getPlayState = function() {
-	return this.game.state.states[this.game.state.current];
 };

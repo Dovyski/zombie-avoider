@@ -20,10 +20,12 @@ Hud.prototype.onClickPlay = function() {
     if(aState.isSimulating()) {
         // TODO: change button to show the stop simulation meaning.
         aState.stopSimulation();
+        console.debug('STOP simulation!');
 
     } else {
         // TODO: change button to start simulation
         aState.startSimulation();
+        console.debug('START simulation!');
     }
 };
 

@@ -23,7 +23,7 @@ var PlayState = function() {
 		mZombies = this.game.add.group();
 		mSurvivors = this.game.add.group();
 
-		mExitDoor = this.game.add.sprite(this.game.world.width - 80, 40, 'exit-door');
+		mExitDoor = this.game.add.sprite(this.game.world.width - 30, this.game.world.centerY - 40, 'exit-door');
 		mExitDoor.anchor.setTo(0.5);
 
 		mSimulating = false;
@@ -36,7 +36,7 @@ var PlayState = function() {
 		}
 
 		for(i = 0; i < 5; i++) {
-			mZombies.add(new Zombie(this.game, this.game.rnd.integerInRange(400, 500), this.game.rnd.integerInRange(400, 500)));
+			mZombies.add(new Zombie(this.game, this.game.rnd.integerInRange(0, this.game.world.width), this.game.rnd.integerInRange(100, this.game.world.height - 80)));
 		}
 
 		// Add a pool of poins
@@ -51,13 +51,20 @@ var PlayState = function() {
 		var aShouldStopSimulation;
 
 		if(mSimulating) {
+			this.game.physics.arcade.overlap(mSurvivors, mZombies, this.onAttackOverlap, null, this);
+
 			aShouldStopSimulation = this.updateSimulation();
 
 			if(aShouldStopSimulation) {
-				this.stopSimulation();
+				this.pauseSimulation();
 				mHud.showSummary();
 			}
 		}
+	};
+
+	this.onAttackOverlap = function(theSurvivor, theZombie) {
+		mScoreDead++;
+		theSurvivor.kill();	// TODO: add blood on the floor.
 	};
 
 	this.updateSimulation = function() {
@@ -85,7 +92,7 @@ var PlayState = function() {
 		}
 
 		// Return true if simulation should stop
-		console.log(mScoreRescued + mScoreDead + aLost, mSurvivorsCount);
+		console.log(mScoreRescued, mScoreDead, aLost, mSurvivorsCount);
 		return mScoreRescued + mScoreDead + aLost >= mSurvivorsCount;
 	}
 
@@ -105,14 +112,14 @@ var PlayState = function() {
 		}, this);
 	};
 
-	this.stopSimulation = function() {
+	this.pauseSimulation = function() {
 		mSimulating = false;
 	};
 
-	this.finishSimulation = function() {
+	this.stopSimulation = function() {
 		mSimulating = false;
 
-		mEntities.forEach(function(theElement, theIndex) {
+		mSurvivors.forEach(function(theElement, theIndex) {
 			theElement.rewind();
 		}, this);
 

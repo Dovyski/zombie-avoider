@@ -1,6 +1,7 @@
 PathPoint = function (game) {
     // Call parent's class (Phaser.Sprite) constructor
     Phaser.Sprite.call(this, game, 0, 0, 'path-point');
+    this.anchor.setTo(0.5);
     this.kill();
 };
 
