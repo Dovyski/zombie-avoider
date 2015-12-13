@@ -8,12 +8,14 @@ var PlayState = function() {
 	var mPathPoints;
 	var mHud;
 	var mSimulating;
-	var mExitDoor;
+	var mForegroundmExitDoor;
 	var mSurvivorsCount;
 	var mScoreRescued;
 	var mScoreDead;
 	var mBackground;
 	var mStartArea;
+	var mProps;
+	var mForeground;
 
 	this.create = function() {
 		var i;
@@ -23,6 +25,7 @@ var PlayState = function() {
 
 		mBackground = this.game.add.sprite(0, 0, 'background');
 		mStartArea = this.game.add.sprite(0, 0, 'start-area');
+		mProps = this.game.add.group();
 
 		mPathPoints = this.game.add.group();
 		mZombies = this.game.add.group();
@@ -45,11 +48,85 @@ var PlayState = function() {
 		}
 
 		// Add a pool of poins
-		for(i = 0; i < 200; i++) {
+		for(i = 0; i < 400; i++) {
 			mPathPoints.add(new PathPoint(this.game));
 		}
 
+		mForeground = this.game.add.group();
+
+		// Arrange all level stuff
+		this.initLevel();
+
+		// Init effects (smoke, lights, etc)
+		this.initEffects();
+
 		mHud = new Hud(this.game);
+	};
+
+	// TODO: get all this inform from a file
+	this.initLevel = function() {
+		var aCar;
+
+		aCar = new Phaser.Sprite(this.game, 200, 457, 'cars');
+		aCar.anchor.setTo(0.5);
+		aCar.angle = 45;
+		aCar.frame = 2;
+		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
+		aCar.body.immovable = true;
+		mProps.add(aCar);
+
+		aCar = new Phaser.Sprite(this.game, 550, 130, 'cars');
+		aCar.anchor.setTo(0.5);
+		aCar.angle = 145;
+		aCar.frame = 0;
+		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
+		aCar.body.immovable = true;
+		mProps.add(aCar);
+
+		aCar = new Phaser.Sprite(this.game, 480, 500, 'cars');
+		aCar.anchor.setTo(0.5);
+		aCar.angle = 60;
+		aCar.frame = 1;
+		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
+		aCar.body.immovable = true;
+		mProps.add(aCar);
+
+		aCar = new Phaser.Sprite(this.game, 700, 340, 'cars');
+		aCar.anchor.setTo(0.5);
+		aCar.angle = 200;
+		aCar.frame = 1;
+		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
+		aCar.body.immovable = true;
+		mProps.add(aCar);
+	};
+
+	// TODO: make this based on level props
+	this.initEffects = function() {
+		var aLight;
+
+		aLight = new Phaser.Sprite(this.game, 25, 49, 'green-beam');
+		this.game.add.tween(aLight).to({alpha: 0.1}, 500, Phaser.Easing.Linear.None, true, 0, -1, true).start();
+		mForeground.add(aLight);
+
+		aLight = new Phaser.Sprite(this.game, 200, 49, 'green-beam');
+		this.game.add.tween(aLight).to({alpha: 0.1}, 500, Phaser.Easing.Linear.None, true, 0, -1, true).start();
+		mForeground.add(aLight);
+
+		aLight = new Phaser.Sprite(this.game, 723, 508, 'green-beam');
+		this.game.add.tween(aLight).to({alpha: 0.1}, 500, Phaser.Easing.Linear.None, true, 0, -1, true).start();
+		mForeground.add(aLight);
+
+		aLight = new Phaser.Sprite(this.game, 555, 135, 'cops-lights');
+		aLight.anchor.setTo(0.5);
+		this.game.physics.enable(aLight, Phaser.Physics.ARCADE);
+		aLight.body.angularVelocity = 300;
+		mForeground.add(aLight);
+
+		aLight = new Phaser.Sprite(this.game, 200, 450, 'cops-lights');
+		aLight.anchor.setTo(0.5);
+		this.game.physics.enable(aLight, Phaser.Physics.ARCADE);
+		aLight.body.angularVelocity = 300;
+		mForeground.add(aLight);
 	};
 
 	this.update = function() {
@@ -64,6 +141,9 @@ var PlayState = function() {
 				this.pauseSimulation();
 				mHud.showSummary();
 			}
+
+			this.game.physics.arcade.collide(mProps, mZombies);
+			this.game.physics.arcade.collide(mProps, mSurvivors);
 		}
 	};
 

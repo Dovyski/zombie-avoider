@@ -22,7 +22,10 @@ var LoadState = function() {
 		this.load.image('start-area', 'assets/start-area.png');
 		this.load.image('exit-door', 'assets/exit-door.png');
 		this.load.image('path-point', 'assets/path-point.png');
+		this.load.image('green-beam', 'assets/green-beam.png');
+		this.load.image('cops-lights', 'assets/cops-lights.png');
 		this.load.spritesheet('survivor', 'assets/survivor.png', 50, 49);
 		this.load.spritesheet('zombie', 'assets/zombie.png', 54, 50);
+		this.load.spritesheet('cars', 'assets/cars.png', 65, 132);
 	};
 };
