@@ -3,8 +3,7 @@ Survivor = function (theGame, theX, theY) {
     Entity.call(this, theGame, theX, theY, 'survivor');
 
     // Init everything
-    this.mPathPoints = []; 									// points this survivor is following
-    this.mSpawnPoint = new Phaser.Point(theX, theY);
+    this.mPathPoints = []; 								// points this survivor is following
 	this.mCurrentPoint = 0;								// current point in the path.
 	this.mCounter = 0;
 	this.mDrawingPath = false;
@@ -72,12 +71,6 @@ Survivor.prototype.play = function() {
 		this.body.velocity.x = aPoint.x - this.position.x;
 		this.body.velocity.y = aPoint.y - this.position.y;
 	}
-};
-
-Survivor.prototype.rewind = function() {
-	this.mPlaying = false;
-	this.position.x = this.mSpawnPoint.x;
-	this.position.y = this.mSpawnPoint.y;
 };
 
 Survivor.prototype.updatePlaying = function() {

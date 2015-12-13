@@ -22,8 +22,8 @@ var PlayState = function() {
 		mPathPoints = this.game.add.group();
 		mZombies = this.game.add.group();
 		mSurvivors = this.game.add.group();
-		mExitDoor = this.game.add.sprite(this.game.world.width - 80, 40, 'exit-door');
 
+		mExitDoor = this.game.add.sprite(this.game.world.width - 80, 40, 'exit-door');
 		mExitDoor.anchor.setTo(0.5);
 
 		mSimulating = false;
@@ -36,7 +36,7 @@ var PlayState = function() {
 		}
 
 		for(i = 0; i < 5; i++) {
-			mZombies.add(new Zombie(this.game, this.game.rnd.integerInRange(50, 500), 40));
+			mZombies.add(new Zombie(this.game, this.game.rnd.integerInRange(400, 500), this.game.rnd.integerInRange(400, 500)));
 		}
 
 		// Add a pool of poins
@@ -96,11 +96,13 @@ var PlayState = function() {
 		mScoreRescued = 0;
 		mScoreDead = 0;
 
-	    for(i = 0; i < mSurvivors.children.length; i++) {
-			if(mSurvivors.children[i]) {
-				mSurvivors.children[i].play();
-			}
-	    }
+		mSurvivors.forEach(function(theElement, theIndex) {
+			theElement.play();
+		}, this);
+
+		mZombies.forEach(function(theElement, theIndex) {
+			theElement.play();
+		}, this);
 	};
 
 	this.stopSimulation = function() {
@@ -110,11 +112,13 @@ var PlayState = function() {
 	this.finishSimulation = function() {
 		mSimulating = false;
 
-		for(i = 0; i < mSurvivors.children.length; i++) {
-			if(mSurvivors.children[i]) {
-				mSurvivors.children[i].rewind();
-			}
-	    }
+		mEntities.forEach(function(theElement, theIndex) {
+			theElement.rewind();
+		}, this);
+
+		mZombies.forEach(function(theElement, theIndex) {
+			theElement.rewind();
+		}, this);
 	};
 
 	this.isSimulating = function() {

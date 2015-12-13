@@ -5,6 +5,7 @@ Entity = function (theGame, theX, theY, theAsset) {
     // Init everything
 	this.mPlaying = false;
 	this.mConcludedPlaying = false;
+    this.mSpawnPoint = new Phaser.Point(theX, theY);
 
 	// Misc
 	this.anchor.setTo(0.5);
