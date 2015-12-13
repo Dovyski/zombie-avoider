@@ -3,7 +3,7 @@ Hud = function (theGame) {
     Phaser.Group.call(this, theGame);
 
     // Init everything
-    this.mPlayButton = new Phaser.Button(this.game, 30, this.game.world.height - 70, 'button', this.onClickPlay, this, 2, 1, 0);
+    this.mPlayButton = new Phaser.Button(this.game, 15, this.game.world.height - 90, 'button', this.onClickPlay, this, 1, 0, 2, 0);
     this.mTitle = new Phaser.Text(this.game, this.game.world.centerX, this.game.world.centerY - 50, "", { font: "Bold 60px Arial", fill: "#ffffff", align: "center" });
     this.mInfo = new Phaser.Text(this.game, this.game.world.centerX, this.mTitle.y + 50, "", { font: "24px Arial", fill: "#ffffff", align: "center" });
     this.mClick = new Phaser.Text(this.game, this.game.world.centerX, this.game.world.height - 80, "Click anywhere to continue", { font: "20px Arial", fill: "#fcfcfc", align: "center" });
@@ -32,14 +32,13 @@ Hud.prototype.onClickPlay = function() {
     var aState = this.getPlayState();
 
     if(aState.isSimulating()) {
-        // TODO: change button to show the stop simulation meaning.
         aState.stopSimulation();
-        console.debug('STOP simulation!');
+        this.mPlayButton.setFrames(1, 0, 2, 0);
 
     } else {
         // TODO: change button to start simulation
         aState.startSimulation();
-        console.debug('START simulation!');
+        this.mPlayButton.setFrames(4, 5, 6, 4);
     }
 };
 
@@ -49,6 +48,7 @@ Hud.prototype.showSummary = function(theTitle, theText) {
     this.mTitle.visible = true;
     this.mInfo.visible = true;
     this.mClick.visible = true;
+    this.mPlayButton.visible = false;
 
     this.mTitle.text = theTitle;
     this.mInfo.text = theText;
@@ -62,6 +62,9 @@ Hud.prototype.hideSummary = function() {
     this.mTitle.visible = false;
     this.mInfo.visible = false;
     this.mClick.visible = false;
+    this.mPlayButton.visible = true;
+
+    this.mPlayButton.setFrames(1, 0, 2, 0);
 };
 
 Hud.prototype.getPlayState = function() {

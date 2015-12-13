@@ -27,5 +27,6 @@ var LoadState = function() {
 		this.load.spritesheet('survivor', 'assets/survivor.png', 50, 49);
 		this.load.spritesheet('zombie', 'assets/zombie.png', 54, 50);
 		this.load.spritesheet('cars', 'assets/cars.png', 65, 132);
+		this.load.spritesheet('button', 'assets/button.png', 64, 65);
 	};
 };
