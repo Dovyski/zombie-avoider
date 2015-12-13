@@ -24,6 +24,9 @@ var PlayState = function() {
 		// Start Phaser's basics physics system.
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
+		// Init random number generator
+		this.game.rnd.sow([12234]);
+
 		mBackground = this.game.add.sprite(0, 0, 'background');
 		mStartArea = this.game.add.sprite(0, 0, 'start-area');
 		mProps = this.game.add.group();
@@ -97,6 +100,14 @@ var PlayState = function() {
 		aCar = new Phaser.Sprite(this.game, 700, 340, 'cars');
 		aCar.anchor.setTo(0.5);
 		aCar.angle = 200;
+		aCar.frame = 1;
+		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
+		aCar.body.immovable = true;
+		mProps.add(aCar);
+
+		aCar = new Phaser.Sprite(this.game, 380, 300, 'cars');
+		aCar.anchor.setTo(0.5);
+		aCar.angle = 45;
 		aCar.frame = 1;
 		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
 		aCar.body.immovable = true;
