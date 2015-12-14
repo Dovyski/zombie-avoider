@@ -13,5 +13,7 @@ var BootState = function() {
 	};
 
 	this.preload = function() {
+		this.load.image('progressbar', 'assets/progressbar.png');
+		this.load.image('progressbar-fill', 'assets/progressbar-fill.png');
 	};
 };

@@ -29,6 +29,11 @@ var LoadState = function() {
 		// Socapex, CC-BY-SA 3.0, http://opengameart.org/content/dark-ambiance
 		// Alexandr Zhelanov, CC-BY 3.0, https://soundcloud.com/alexandr-zhelanov, http://opengameart.org/content/closed-area
 
+		this.mProgressFill = this.game.add.sprite(this.game.world.centerX - 120, this.game.world.centerY - 10, 'progressbar-fill');
+		this.mProgress = this.game.add.sprite(this.game.world.centerX - 120, this.game.world.centerY - 10, 'progressbar');
+
+		this.load.setPreloadSprite(this.mProgress);
+
 		this.load.image('background', 'assets/background.png');
 		this.load.image('start-area', 'assets/start-area.png');
 		this.load.image('exit-door', 'assets/exit-door.png');
