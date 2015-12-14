@@ -4,7 +4,7 @@
 
 var LoadState = function() {
 	this.create = function() {
-		this.state.start('menu');
+		this.state.start('brand');
 	};
 
 	this.preload = function() {
@@ -34,6 +34,7 @@ var LoadState = function() {
 
 		this.load.setPreloadSprite(this.mProgress);
 
+		this.load.image('brain-rating', 'assets/brain-rating.png'); // Here: http://www.as3gamegears.com/extras/brain-rating-for-games/
 		this.load.image('background', 'assets/background.png');
 		this.load.image('start-area', 'assets/start-area.png');
 		this.load.image('exit-door', 'assets/exit-door.png');
