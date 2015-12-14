@@ -10,15 +10,14 @@
 		],
 		"zombies": [
 			{"type": "simple", "x": 686, "y": 60},
-			{"type": "simple", "x": 480, "y": 310},
-			{"type": "simple", "x": 270, "y": 470}
+			{"type": "simple", "x": 480, "y": 310}
 		],
 		"exit": {"x": 740, "y": 520},
 		"start": {"x": 10, "y": 20},
 		"props": [
 			{"type": "car", "asset": "cars", "frame": 2, "angle": 45, "x": 200, "y": 457},
 			{"type": "car", "asset": "cars", "frame": 0, "angle": 145, "x": 500, "y": 130},
-			{"type": "car", "asset": "cars", "frame": 1, "angle": 60, "x": 480, "y": 550},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 30, "x": 480, "y": 570},
 			{"type": "car", "asset": "cars", "frame": 1, "angle": 200, "x": 700, "y": 340},
 			{"type": "car", "asset": "cars", "frame": 1, "angle": 45, "x": 380, "y": 300},
 			{"type": "light", "asset": "green-beam", "speed": 500, "x": 50, "y": 300},
