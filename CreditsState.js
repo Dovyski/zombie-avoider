@@ -1,12 +1,12 @@
 var TEXT =
-'Zombie Avoid\n\n' +
+'ZOMBIE AVOID\n' +
 
-'A game made for LD34\n\n' +
+'A game made for LD34\n\n\n' +
 
-'[Coding/Game Design]\n' +
+'[Coding/Game Design]\n\n' +
 'Fernando "As3GameGears" Bevilacqua\n' +
 
-'\n[Art]\n' +
+'\n[Art]\n\n' +
 'hc (opengameart.org/content/road-tile-textures) \n' +
 'Riley Gombart (opengameart.org/content/animated-top-down-zombie) \n' +
 'artisticdude (opengameart.org/content/zombies-sound-pack) \n' +
@@ -16,7 +16,7 @@ var TEXT =
 'H-Hour (opengameart.org/content/street-lines) \n' +
 'Marc Russell (www.spicypixel.net) \n' +
 'Osmic (opengameart.org/content/zombie-ui-pack) \n' +
-'Ravenmore (dycha.net, (opengameart.org/content/fantasy-ui-elements-by-ravenmore) \n' +
+'Ravenmore (dycha.net) \n' +
 'Dakal (opengameart.org/content/zombie-gui) \n' +
 'Osmic (opengameart.org/content/zombie-logo-diy-kit) \n' +
 'h0rtl4kk (opengameart.org/content/ui-pack-1) \n' +
@@ -50,7 +50,7 @@ CreditsState = function() {
 	};
 
 	this.update = function() {
-		mText.y -= 0.2;
+		mText.y -= 0.4;
 
 		if(mText.y + mText.height <= 0) {
 			mText.y = this.game.world.height;
