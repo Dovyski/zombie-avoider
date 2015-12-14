@@ -38,6 +38,7 @@ var LoadState = function() {
 		this.load.image('thing', 'assets/thing.png');
 		this.load.image('dialog', 'assets/dialog.png');
 		this.load.image('logo', 'assets/logo.png');
+		this.load.image('edit-frame', 'assets/edit-frame.png?4');
 
 		this.load.spritesheet('survivor', 'assets/survivor.png', 50, 49);
 		this.load.spritesheet('zombie', 'assets/zombie.png', 54, 50);
