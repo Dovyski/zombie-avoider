@@ -58,5 +58,7 @@ var LoadState = function() {
 		this.load.audio('zombie5', 'assets/sound/zombie-19.mp3');
 		this.load.audio('zombie6', 'assets/sound/zombie-21.mp3');
 		this.load.audio('killed', 'assets/sound/killed.mp3');
+
+		this.load.json('levels', 'assets/levels.json');
 	};
 };

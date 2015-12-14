@@ -18,6 +18,7 @@ PlayState = function() {
 	var mForeground;
 	var mLights;
 	var mZombieSfxCounter;
+	var mLevel;
 
 	var mMusicTitle;
 	var mMusicPlanning;
@@ -26,36 +27,41 @@ PlayState = function() {
 	var mSfxKilled;
 
 	this.create = function() {
-		var i;
+		var i, aLevels;
 
 		// Start Phaser's basics physics system.
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
-
 		// Init random number generator
 		this.game.rnd.sow([12234]);
 
-		mBackground = this.game.add.sprite(0, 0, 'background');
-		mStartArea = this.game.add.sprite(0, 0, 'start-area');
+		// Load level structure
+		aLevels = this.game.cache.getJSON('levels');
+		mLevel = aLevels[GameInfo.level];
+
+		this.initSounds();
+
+		mBackground = this.game.add.sprite(0, 0, mLevel.background);
+		mStartArea = this.game.add.sprite(mLevel.start.x, mLevel.start.y, 'start-area');
 		mProps = this.game.add.group();
 
 		mZombies = this.game.add.group();
 		mSurvivors = this.game.add.group();
 
-		mExitDoor = this.game.add.sprite(this.game.world.width - 60, this.game.world.height - 80, 'exit-door');
+		mExitDoor = this.game.add.sprite(mLevel.exit.x, mLevel.exit.y, 'exit-door');
 		mExitDoor.anchor.setTo(0.5);
 
 		mSimulating = false;
 		mScoreRescued = 0;
 		mScoreDead = 0;
-		mSurvivorsCount = 2;
+		mSurvivorsCount = mLevel.survivors.length;
 		mZombieSfxCounter = 0;
 
 		for(i = 0; i < mSurvivorsCount; i++) {
-			mSurvivors.add(new Survivor(this.game, 80 + 80 * i, 40));
+			mSurvivors.add(new Survivor(this.game, mLevel.survivors[i].x, mLevel.survivors[i].y));
 		}
 
-		for(i = 0; i < 5; i++) {
-			mZombies.add(new Zombie(this.game, this.game.rnd.integerInRange(0, this.game.world.width), this.game.rnd.integerInRange(100, this.game.world.height - 80)));
+		for(i = 0; i < mLevel.zombies.length; i++) {
+			mZombies.add(new Zombie(this.game, mLevel.zombies[i].x, mLevel.zombies[i].y));
 		}
 
 		mForeground = this.game.add.group();
@@ -68,15 +74,10 @@ PlayState = function() {
 			mPathPoints.add(new PathPoint(this.game));
 		}
 
-		// Arrange all level stuff
-		this.initLevel();
-
-		// Init effects (smoke, lights, etc)
-		this.initEffects();
+		// Arrange all level stuff / effects (smoke, lights, etc)
+		this.initProps();
 
 		mHud = new Hud(this.game);
-
-		this.initSounds();
 	};
 
 	this.initSounds = function() {
@@ -98,78 +99,36 @@ PlayState = function() {
 		}, this);
 	};
 
-	// TODO: get all this inform from a file
-	this.initLevel = function() {
-		var aCar;
+	this.initProps = function() {
+		var aProp, i;
 
-		aCar = new Phaser.Sprite(this.game, 200, 457, 'cars');
-		aCar.anchor.setTo(0.5);
-		aCar.angle = 45;
-		aCar.frame = 2;
-		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
-		aCar.body.immovable = true;
-		mProps.add(aCar);
+		for(i = 0; i < mLevel.props.length; i++) {
+			switch(mLevel.props[i].type) {
+				case 'car':
+					aProp = new Phaser.Sprite(this.game, mLevel.props[i].x, mLevel.props[i].y, mLevel.props[i].asset);
+					aProp.anchor.setTo(0.5);
+					aProp.angle = mLevel.props[i].angle;
+					aProp.frame = mLevel.props[i].frame;
+					this.game.physics.enable(aProp, Phaser.Physics.ARCADE);
+					aProp.body.immovable = true;
+					mProps.add(aProp);
+					break;
 
-		aCar = new Phaser.Sprite(this.game, 550, 130, 'cars');
-		aCar.anchor.setTo(0.5);
-		aCar.angle = 145;
-		aCar.frame = 0;
-		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
-		aCar.body.immovable = true;
-		mProps.add(aCar);
+				case 'light':
+					aProp = new Phaser.Sprite(this.game, mLevel.props[i].x, mLevel.props[i].y, mLevel.props[i].asset);
+					this.game.add.tween(aProp).to({alpha: 0.1}, mLevel.props[i].speed, Phaser.Easing.Linear.None, true, 0, -1, true).start();
+					mForeground.add(aProp);
+					break;
 
-		aCar = new Phaser.Sprite(this.game, 480, 500, 'cars');
-		aCar.anchor.setTo(0.5);
-		aCar.angle = 60;
-		aCar.frame = 1;
-		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
-		aCar.body.immovable = true;
-		mProps.add(aCar);
-
-		aCar = new Phaser.Sprite(this.game, 700, 340, 'cars');
-		aCar.anchor.setTo(0.5);
-		aCar.angle = 200;
-		aCar.frame = 1;
-		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
-		aCar.body.immovable = true;
-		mProps.add(aCar);
-
-		aCar = new Phaser.Sprite(this.game, 380, 300, 'cars');
-		aCar.anchor.setTo(0.5);
-		aCar.angle = 45;
-		aCar.frame = 1;
-		this.game.physics.enable(aCar, Phaser.Physics.ARCADE);
-		aCar.body.immovable = true;
-		mProps.add(aCar);
-	};
-
-	// TODO: make this based on level props
-	this.initEffects = function() {
-		var aLight;
-
-		aLight = new Phaser.Sprite(this.game, 25, 49, 'green-beam');
-		this.game.add.tween(aLight).to({alpha: 0.1}, 500, Phaser.Easing.Linear.None, true, 0, -1, true).start();
-		mForeground.add(aLight);
-
-		aLight = new Phaser.Sprite(this.game, 200, 49, 'green-beam');
-		this.game.add.tween(aLight).to({alpha: 0.1}, 500, Phaser.Easing.Linear.None, true, 0, -1, true).start();
-		mForeground.add(aLight);
-
-		aLight = new Phaser.Sprite(this.game, 723, 508, 'green-beam');
-		this.game.add.tween(aLight).to({alpha: 0.1}, 500, Phaser.Easing.Linear.None, true, 0, -1, true).start();
-		mForeground.add(aLight);
-
-		aLight = new Phaser.Sprite(this.game, 555, 135, 'cops-lights');
-		aLight.anchor.setTo(0.5);
-		this.game.physics.enable(aLight, Phaser.Physics.ARCADE);
-		aLight.body.angularVelocity = 300;
-		mForeground.add(aLight);
-
-		aLight = new Phaser.Sprite(this.game, 200, 450, 'cops-lights');
-		aLight.anchor.setTo(0.5);
-		this.game.physics.enable(aLight, Phaser.Physics.ARCADE);
-		aLight.body.angularVelocity = 300;
-		mForeground.add(aLight);
+				case 'spin':
+					aProp = new Phaser.Sprite(this.game, mLevel.props[i].x, mLevel.props[i].y, mLevel.props[i].asset);
+					aProp.anchor.setTo(0.5);
+					this.game.physics.enable(aProp, Phaser.Physics.ARCADE);
+					aProp.body.angularVelocity = mLevel.props[i].speed;
+					mForeground.add(aProp);
+					break;
+			}
+		}
 	};
 
 	this.update = function() {
@@ -316,4 +275,8 @@ PlayState = function() {
 	this.getSurvivors = function() {
 		return mSurvivors;
 	};
+
+	this.getLevelStructure = function() {
+		return mLevel;
+	}
 };

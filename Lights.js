@@ -27,7 +27,8 @@ Lights.prototype.update = function() {
         aPosY,
         i,
         aTotal,
-        aSurvivor;
+        aSurvivor,
+        aState;
 
     Phaser.Group.prototype.update.call(this);
 
@@ -35,9 +36,10 @@ Lights.prototype.update = function() {
     this.mShadowTexture.context.fillStyle = 'rgb(10, 10, 10)';
     this.mShadowTexture.context.fillRect(0, 0, this.game.width, this.game.height);
 
-    aRadius = 100 + this.game.rnd.integerInRange(1 , 10);
+    aState = this.getPlayState();
 
-    aSurvivors = this.getPlayState().getSurvivors().children;
+    aRadius = aState.getLevelStructure().light + this.game.rnd.integerInRange(1 , 10);
+    aSurvivors = aState.getSurvivors().children;
     aTotal = aSurvivors.length;
 
     for(i = 0; i < aTotal; i++) {
