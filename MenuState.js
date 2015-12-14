@@ -32,14 +32,16 @@ MenuState = function() {
 
 		// Start title music as soon as possible
 		this.game.sound.setDecodedCallback([mMusicTitle], function() {
-			mMusicTitle.play();
+			if(this.game.state.current == 'menu') {
+				mMusicTitle.play();
+			}
 		}, this);
 	};
 
 	this.onClickPlay = function() {
 		mMusicTitle.stop();
 		mMusicTitle.destroy();
-		this.game.state.start('play');
+		this.game.state.start('instructions');
 	};
 
 	this.onClickCredits = function() {

@@ -6,7 +6,9 @@ CreditsState = function() {
 
 		// Start title music as soon as possible
 		this.game.sound.setDecodedCallback([mMusicTitle], function() {
-			mMusicTitle.play();
+			if(this.game.state.current == 'credits') {
+				mMusicTitle.play();
+			}
 		}, this);
 	};
 

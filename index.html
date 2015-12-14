@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="./PlayState.js"></script>
 	<script type="text/javascript" src="./MenuState.js"></script>
 	<script type="text/javascript" src="./CreditsState.js"></script>
+	<script type="text/javascript" src="./InstructionsState.js"></script>
 	<script type="text/javascript" src="./Entity.js"></script>
 	<script type="text/javascript" src="./Survivor.js"></script>
 	<script type="text/javascript" src="./PathPoint.js"></script>
@@ -27,6 +28,7 @@
 		game.state.add('boot', BootState);
 		game.state.add('menu', MenuState);
 		game.state.add('credits', CreditsState);
+		game.state.add('instructions', InstructionsState);
 
 		// Start the initial state
 		game.state.start('boot');
