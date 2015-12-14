@@ -38,6 +38,8 @@ PlayState = function() {
 		aLevels = this.game.cache.getJSON('levels');
 		mLevel = aLevels[GameInfo.level];
 
+		console.debug('Loading level', GameInfo.level);
+
 		this.initSounds();
 
 		mBackground = this.game.add.sprite(0, 0, mLevel.background);
@@ -83,7 +85,7 @@ PlayState = function() {
 	this.initSounds = function() {
 		mMusicTitle = new Phaser.Sound(this.game, 'title-music', 1, true);
 		mMusicPlanning = new Phaser.Sound(this.game, 'planning-music', 1, true);
-		mSfxWalking = new Phaser.Sound(this.game, 'walk', 0.2, true);
+		mSfxWalking = new Phaser.Sound(this.game, 'walk', 0.8, true);
 		mSfxFinal = new Phaser.Sound(this.game, 'final', 0.5, false);
 		mSfxKilled = new Phaser.Sound(this.game, 'killed', 0.5, false);
 
@@ -215,7 +217,6 @@ PlayState = function() {
 		}
 
 		// Return true if simulation should stop
-		console.log(mScoreRescued, mScoreDead, aLost, mSurvivorsCount);
 		return mScoreRescued + mScoreDead + aLost >= mSurvivorsCount;
 	}
 

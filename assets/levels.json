@@ -9,22 +9,110 @@
 			{"type": "knife", "x": 200, "y": 50}
 		],
 		"zombies": [
+			{"type": "simple", "x": 686, "y": 60}
+		],
+		"exit": {"x": 740, "y": 520},
+		"start": {"x": 10, "y": 10},
+		"props": [
+			{"type": "car", "asset": "cars", "frame": 2, "angle": 45, "x": 100, "y": 457},
+			{"type": "car", "asset": "cars", "frame": 0, "angle": 145, "x": 500, "y": 130},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 30, "x": 480, "y": 570},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 200, "x": 700, "y": 340},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 0, "x": 380, "y": 300},
+			{"type": "light", "asset": "green-beam", "speed": 500, "x": 50, "y": 50},
+			{"type": "light", "asset": "green-beam", "speed": 500, "x": 200, "y": 50},
+			{"type": "light", "asset": "green-beam", "speed": 500, "x": 723, "y": 508},
+			{"type": "spin", "asset": "cops-lights", "speed": 300, "x": 510, "y": 135},
+			{"type": "spin", "asset": "cops-lights", "speed": 300, "x": 100, "y": 457}
+		]
+	},
+	{
+		"id": 1,
+		"name": "Level 1",
+		"background": "background",
+		"light": 300,
+		"survivors": [
+			{"type": "knife", "x": 110, "y": 50},
+			{"type": "knife", "x": 200, "y": 50}
+		],
+		"zombies": [
 			{"type": "simple", "x": 686, "y": 60},
 			{"type": "simple", "x": 480, "y": 310}
 		],
 		"exit": {"x": 740, "y": 520},
-		"start": {"x": 10, "y": 20},
+		"start": {"x": 10, "y": 10},
 		"props": [
 			{"type": "car", "asset": "cars", "frame": 2, "angle": 45, "x": 200, "y": 457},
 			{"type": "car", "asset": "cars", "frame": 0, "angle": 145, "x": 500, "y": 130},
 			{"type": "car", "asset": "cars", "frame": 1, "angle": 30, "x": 480, "y": 570},
 			{"type": "car", "asset": "cars", "frame": 1, "angle": 200, "x": 700, "y": 340},
 			{"type": "car", "asset": "cars", "frame": 1, "angle": 45, "x": 380, "y": 300},
-			{"type": "light", "asset": "green-beam", "speed": 500, "x": 50, "y": 300},
+			{"type": "light", "asset": "green-beam", "speed": 500, "x": 50, "y": 50},
 			{"type": "light", "asset": "green-beam", "speed": 500, "x": 200, "y": 50},
 			{"type": "light", "asset": "green-beam", "speed": 500, "x": 723, "y": 508},
 			{"type": "spin", "asset": "cops-lights", "speed": 300, "x": 510, "y": 135},
 			{"type": "spin", "asset": "cops-lights", "speed": 300, "x": 200, "y": 450}
+		]
+	},
+	{
+		"id": 2,
+		"name": "Level 2",
+		"background": "background",
+		"light": 300,
+		"survivors": [
+			{"type": "knife", "x": 110, "y": 50},
+			{"type": "knife", "x": 200, "y": 50}
+		],
+		"zombies": [
+			{"type": "simple", "x": 60, "y": 360},
+			{"type": "simple", "x": 300, "y": 450},
+			{"type": "simple", "x": 400, "y": 280}
+		],
+		"exit": {"x": 740, "y": 520},
+		"start": {"x": 10, "y": 10},
+		"props": [
+			{"type": "car", "asset": "cars", "frame": 2, "angle": 45, "x": 200, "y": 210},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 120, "x": 140, "y": 405},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 45, "x": 505, "y": 180},
+			{"type": "car", "asset": "cars", "frame": 0, "angle": 230, "x": 690, "y": 335},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 5, "x": 470, "y": 520},
+			{"type": "light", "asset": "green-beam", "speed": 500, "x": 50, "y": 300},
+			{"type": "light", "asset": "green-beam", "speed": 500, "x": 200, "y": 50},
+			{"type": "light", "asset": "green-beam", "speed": 500, "x": 723, "y": 508},
+			{"type": "spin", "asset": "cops-lights", "speed": 300, "x": 205, "y": 210},
+			{"type": "spin", "asset": "cops-lights", "speed": 300, "x": 685, "y": 335}
+		]
+	},
+	{
+		"id": 3,
+		"name": "Level 3",
+		"background": "background",
+		"light": 300,
+		"survivors": [
+			{"type": "knife", "x": 110, "y": 50},
+			{"type": "knife", "x": 200, "y": 50}
+		],
+		"zombies": [
+			{"type": "simple", "x": 40, "y": 380},
+			{"type": "simple", "x": 320, "y": 500},
+			{"type": "simple", "x": 635, "y": 480},
+			{"type": "simple", "x": 670, "y": 60}
+		],
+		"exit": {"x": 740, "y": 520},
+		"start": {"x": 10, "y": 10},
+		"props": [
+			{"type": "car", "asset": "cars", "frame": 2, "angle": 5, "x": 25, "y": 230},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 10, "x": 165, "y": 490},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 4, "x": 235, "y": 270},
+			{"type": "car", "asset": "cars", "frame": 0, "angle": 90, "x": 445, "y": 11},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 2, "x": 535, "y": 208},
+			{"type": "car", "asset": "cars", "frame": 1, "angle": 2, "x": 500, "y": 450},
+			{"type": "car", "asset": "cars", "frame": 2, "angle": 3, "x": 770, "y": 330},
+			{"type": "light", "asset": "green-beam", "speed": 500, "x": 50, "y": 300},
+			{"type": "light", "asset": "green-beam", "speed": 500, "x": 200, "y": 50},
+			{"type": "light", "asset": "green-beam", "speed": 500, "x": 723, "y": 508},
+			{"type": "spin", "asset": "cops-lights", "speed": 300, "x": 25, "y": 230},
+			{"type": "spin", "asset": "cops-lights", "speed": 300, "x": 770, "y": 330}
 		]
 	 }
 ]
